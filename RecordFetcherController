@@ -1,0 +1,35 @@
+public with sharing class RecordFetcherController {
+
+    @AuraEnabled(cacheable=true)
+    public static List<SObject> fetchChildRecords(String objectName, Id parentId, String lookupField, String displayFieldsSet) {
+        if (String.isBlank(objectName) || String.isBlank(lookupField) || String.isBlank(displayFieldsSet)) {
+            throw new AuraHandledException('Missing important parameters. Please double-check.');
+        }
+        
+        // Get the fields to be displayed from the Field Set
+        String displayFields = getFieldSetFields(objectName, displayFieldsSet);
+        
+        if (String.isBlank(displayFields)) {
+            throw new AuraHandledException('Field Set is empty or does not exist.');
+        }
+        
+        // Construct the SOQL query to fetch related records
+        String query = 'SELECT ' + displayFields + ' FROM ' + objectName + 
+                       ' WHERE ' + lookupField + ' = :parentId';
+        
+        return Database.query(query);
+    }
+    
+    private static String getFieldSetFields(String objectName, String fieldSetName) {
+        Schema.FieldSet fieldSetObj = Schema.getGlobalDescribe().get(objectName).getDescribe().fieldSets.getMap().get(fieldSetName);
+        
+        if (fieldSetObj == null) return '';
+        
+        List<String> fieldList = new List<String>();
+        for (Schema.FieldSetMember field : fieldSetObj.getFields()) {
+            fieldList.add(field.getFieldPath());
+        }
+        
+        return String.join(fieldList, ', ');
+    }
+}

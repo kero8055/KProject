@@ -1,0 +1,24 @@
+<template>
+    <template if:true={recordList}>
+        <template for:each={recordList} for:item="recordItem">
+            <lightning-card key={recordItem.Id} title="Record {recordItem.Id}">
+                <div class="slds-p-horizontal_small">
+                    <lightning-record-view-form record-id={recordItem.Id} object-api-name={childObjectName}>
+                        <lightning-layout multiple-rows>
+                            <template for:each={displayFields} for:item="field">
+                                <lightning-layout-item key={field} size="12">
+                                    <lightning-output-field field-name={field}></lightning-output-field>
+                                </lightning-layout-item>
+                            </template>
+                        </lightning-layout>
+                    </lightning-record-view-form>
+                </div>
+            </lightning-card>
+        </template>
+    </template>
+    <template if:true={errorMessage}>
+        <lightning-card title="Oops, something went wrong!">
+            <p>{errorMessage}</p>
+        </lightning-card>
+    </template>
+</template>

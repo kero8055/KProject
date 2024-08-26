@@ -10,11 +10,8 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__RecordPage">
-            <objects>
-                <object>*</object>
-            </objects>
+            
             <property name="childObjectName" type="String" label="Related Object API Name" required="true"/>
-            <property name="parentRecordId" type="String" label="Parent Record ID" required="true"/>
             <property name="relationshipFieldName" type="String" label="Lookup Field Name" required="true"/>
             <property name="fieldSetName" type="String" label="Field Set Name" required="true"/>
         </targetConfig>

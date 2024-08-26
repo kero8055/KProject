@@ -4,6 +4,7 @@ import fetchChildRecords from '@salesforce/apex/RecordFetcherController.fetchChi
 export default class RelatedRecordDisplay extends LightningElement {
     @api childObjectName;
     @api parentRecordId;
+    @api recordId;
     @api relationshipFieldName;
     @api fieldSetName;
     
@@ -20,7 +21,7 @@ export default class RelatedRecordDisplay extends LightningElement {
     loadRelatedRecords() {
         fetchChildRecords({
             objectName: this.childObjectName,
-            parentId: this.parentRecordId,
+            parentId: this.recordId,
             lookupField: this.relationshipFieldName,
             displayFieldsSet: this.fieldSetName
         })

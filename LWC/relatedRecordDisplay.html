@@ -1,7 +1,7 @@
 <template>
     <template if:true={recordList}>
-        <template for:each={recordList} for:item="recordItem">
-            <lightning-card key={recordItem.Id} title="Record {recordItem.Id}">
+        <template for:each={recordList} for:item="recordItem" >
+            <lightning-card key={recordItem.Id} >
                 <div class="slds-p-horizontal_small">
                     <lightning-record-view-form record-id={recordItem.Id} object-api-name={childObjectName}>
                         <lightning-layout multiple-rows>

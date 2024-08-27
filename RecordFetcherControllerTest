@@ -1,0 +1,34 @@
+@IsTest
+public class RecordFetcherControllerTest {
+    
+    @TestSetup
+    static void setupTestData() {
+        // Create a test Account
+        Account parentAccount = new Account(Name = 'Test Account');
+        insert parentAccount;
+        
+        // Create test Contacts associated with the Account
+        Contact childContact1 = new Contact(FirstName = 'Test', LastName = 'Contact1', AccountId = parentAccount.Id);
+        Contact childContact2 = new Contact(FirstName = 'Test', LastName = 'Contact2', AccountId = parentAccount.Id);
+        insert new List<Contact> { childContact1, childContact2 };
+        
+    }
+
+    @IsTest
+    static void testFetchChildRecords() {
+        // Fetch the test data
+        Account parentAccount = [SELECT Id FROM Account WHERE Name = 'Test Account' LIMIT 1];
+        
+        // Test the method
+        Test.startTest();
+        List<SObject> fetchedRecords = RecordFetcherController.fetchChildRecords(
+            'Contact', parentAccount.Id, 'AccountId', 'SampleFieldSet');
+        Test.stopTest();
+        
+        // Validate the results
+        System.assertEquals(2, fetchedRecords.size(), 'The number of fetched records should be 2.');
+        
+    }
+
+    
+}

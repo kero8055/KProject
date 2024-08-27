@@ -1,0 +1,17 @@
+Introduction
+The RelatedRecordDisplay LWC component was created to dynamically display related child records based on a parent record, using fields specified in a Field Set.
+
+Steps Taken
+Understanding Requirements: The component needed to display related records for any given parent record and be reusable across different Salesforce pages.
+
+Component Structure:
+
+HTML Template: Designed to render records dynamically and handle errors.
+JavaScript: Implemented logic to fetch records from the server and process data for display.
+XML Configuration: Made the component configurable and usable on various Salesforce pages.
+Development Highlights:
+
+Dynamic SOQL: Used in the Apex controller to fetch the related records based on inputs.
+Field Handling: Extracted and displayed fields as defined in the Field Set.
+Error Management: Included user-friendly error messages for better user experience.
+Testing: The component was tested across different page types and scenarios to ensure reliability.
